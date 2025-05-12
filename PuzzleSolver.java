@@ -147,6 +147,7 @@ public class PuzzleSolver {
 			} else if (alg == 3) {
 				// Manual play selected
 				System.out.println("The fewer moves you make, the better!");
+				System.out.println("IMPORTANT: YOU ALWAYS MOVE THE EMPTY POSITION (0) TOWARDS A PUZZLE PIECE.\nBy this way,the positions are switched. ");
 				ManualSolver manualSolver = new ManualSolver();
 				manualSolver.play(initialState, scan);
 			}			
