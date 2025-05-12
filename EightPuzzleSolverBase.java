@@ -1,6 +1,9 @@
 import java.util.*;
 
 public abstract class EightPuzzleSolverBase {
+	
+	public static final String YELLOW = "\u001B[33m";
+	public static final String RESET  = "\u001B[0m";
 
     protected PriorityQueue<Node> priorityQueue;  // Frontier nodes to explore (priority-based)
     protected Set<Node> settled;                  // Set of already visited/expanded nodes
@@ -63,9 +66,12 @@ public abstract class EightPuzzleSolverBase {
 
     // Prints all states in the path from start to goal
     public static void printPath(List<int[][]> path) {
+		System.out.println(YELLOW);
         for (int[][] state : path) {
             printState(state);
         }
+		System.out.println(RESET);
+		
     }
 
     // Returns how many nodes were expanded during the search

@@ -3,6 +3,10 @@ import java.util.*;
 // Main class to run and test 8-puzzle solver with different algorithms
 public class PuzzleSolver { 
 
+	public static final String YELLOW = "\u001B[33m";
+	public static final String RESET  = "\u001B[0m";
+	public static final String CYAN = "\u001B[36m";
+
 	// Predefined goal state of the 8-puzzle
 	private static int[][] goalState = {
         {6, 5, 4},
@@ -16,7 +20,8 @@ public class PuzzleSolver {
             System.out.println(Arrays.toString(row));
         }
         System.out.println("=========");
-    }
+	}
+    
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in); // Input scanner
@@ -37,10 +42,18 @@ public class PuzzleSolver {
 		int choice = 0;
 
 		while (true) {
-			System.out.println("Welcome to Eight Puzzle!\nGoal State is:");
+			System.out.println("Welcome to Eight Puzzle!");
+			
+			System.out.println(YELLOW + "Goal State is:");
+			
 			printState(goalState); // Display goal state
 			
+			System.out.print(RESET);
+			
+			
 			System.out.println("Choose the initial state: ");
+			
+			System.out.print(CYAN);
 			
 			// List of all predefined initial states
 			int[][][] allStates = {
@@ -63,6 +76,8 @@ public class PuzzleSolver {
 				System.out.println("=".repeat(80));
 			}
 
+			System.out.println(RESET);
+			
 			// Get user input for initial state choice
 			while (true) {
 				System.out.print("Enter your choice (1-10): ");
@@ -79,9 +94,12 @@ public class PuzzleSolver {
 				}
 			}	
 			
+			
 			int[][] initialState = allStates[choice - 1];
 			System.out.println("Initial State is:");
+			System.out.print(CYAN);
 			printState(initialState); // Display chosen initial state
+			System.out.print(RESET);
 			
 			// Prompt for algorithm selection
 			while (true) {
@@ -112,12 +130,14 @@ public class PuzzleSolver {
 				// Print results
 				if (solution != null) {
 					EightPuzzleSolver.printPath(solver.getOptimalPath());
+					System.out.print(CYAN);
 					System.out.println("Cost: " + solver.getCost());
 					System.out.println("---------");
 					System.out.println("Number of node extensions: " + solver.getExtensionsCount());
 					System.out.println("---------");
 					System.out.printf("Execution time: %.4f seconds%n", durationInSeconds);
 					System.out.println("---------");
+					System.out.print(RESET);
 				} else {
 					System.out.println("No solution found.");
 				}
@@ -134,12 +154,15 @@ public class PuzzleSolver {
 				// Print results
 				if (solution != null) {
 					EightPuzzleSolverAstr.printPath(solver.getOptimalPath());
+					System.out.print(CYAN);
 					System.out.println("Cost: " + solver.getCost());
 					System.out.println("---------");
 					System.out.println("Number of node extensions: " + solver.getExtensionsCount());
 					System.out.println("---------");
 					System.out.printf("Execution time: %.4f seconds%n", durationInSeconds);
 					System.out.println("---------");
+					System.out.print(RESET);
+					
 				} else {
 					System.out.println("No solution found.");
 				}
@@ -147,7 +170,7 @@ public class PuzzleSolver {
 			} else if (alg == 3) {
 				// Manual play selected
 				System.out.println("The fewer moves you make, the better!");
-				System.out.println("IMPORTANT: YOU ALWAYS MOVE THE EMPTY POSITION (0) TOWARDS A PUZZLE PIECE.\nBy this way,the positions are switched. ");
+				System.out.println( YELLOW + "IMPORTANT: YOU ALWAYS MOVE THE EMPTY POSITION (0) TOWARDS A PUZZLE PIECE.\nBy this way,the positions are switched. " + RESET);
 				ManualSolver manualSolver = new ManualSolver();
 				manualSolver.play(initialState, scan);
 			}			

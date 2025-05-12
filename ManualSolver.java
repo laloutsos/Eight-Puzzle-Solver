@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 // ManualSolver allows the user to solve the 8-puzzle manually via keyboard inputs
 public class ManualSolver extends EightPuzzleSolverBase {
+	
+	public static final String RED = "\u001B[31m";
+	public static final String RESET  = "\u001B[0m";
 
     // Starts the manual play session
     public void play(int[][] initialState, Scanner scan) {
@@ -37,27 +40,35 @@ public class ManualSolver extends EightPuzzleSolverBase {
 
             int[][] newState = null;
 
-            // Handle user input and perform corresponding move if valid
-            switch (input) {
-                case "w": if (zx > 0) newState = swap(state, zx, zy, zx - 1, zy); break; // Move up
-                case "s": if (zx < 2) newState = swap(state, zx, zy, zx + 1, zy); break; // Move down
-                case "a": if (zy > 0) newState = swap(state, zx, zy, zx, zy - 1); break; // Move left
-                case "d": if (zy < 2) newState = swap(state, zx, zy, zx, zy + 1); break; // Move right
-                case "u": if (zx > 0 && zy < 2) newState = swap(state, zx, zy, zx - 1, zy + 1); break; // Up-right
-                case "y": if (zx > 0 && zy > 0) newState = swap(state, zx, zy, zx - 1, zy - 1); break; // Up-left
-                case "h": if (zx < 2 && zy > 0) newState = swap(state, zx, zy, zx + 1, zy - 1); break; // Down-left
-                case "j": if (zx < 2 && zy < 2) newState = swap(state, zx, zy, zx + 1, zy + 1); break; // Down-right
-                default:
-                    System.out.println("Invalid move.");
-            }
+			boolean validInput = true;
 
-            // Apply the move if valid
-            if (newState != null) {
-                score++; // Increment move count
-                state = newState;
-            } else {
-                System.out.println("Move not allowed.");
-            }
+			switch (input) {
+				case "w": if (zx > 0) newState = swap(state, zx, zy, zx - 1, zy); break;
+				case "s": if (zx < 2) newState = swap(state, zx, zy, zx + 1, zy); break;
+				case "a": if (zy > 0) newState = swap(state, zx, zy, zx, zy - 1); break;
+				case "d": if (zy < 2) newState = swap(state, zx, zy, zx, zy + 1); break;
+				case "u": if (zx > 0 && zy < 2) newState = swap(state, zx, zy, zx - 1, zy + 1); break;
+				case "y": if (zx > 0 && zy > 0) newState = swap(state, zx, zy, zx - 1, zy - 1); break;
+				case "h": if (zx < 2 && zy > 0) newState = swap(state, zx, zy, zx + 1, zy - 1); break;
+				case "j": if (zx < 2 && zy < 2) newState = swap(state, zx, zy, zx + 1, zy + 1); break;
+				case "q": System.exit(0); break;
+				default:
+					validInput = false;
+			}
+
+			if (!validInput) {
+				System.out.print(RED);
+				System.out.println("Invalid move.");
+				System.out.print(RESET);
+			} else if (newState != null) {
+				score++;
+				state = newState;
+			} else {
+				System.out.print(RED);
+				System.out.println("Move not allowed.");
+				System.out.print(RESET);
+			}
+
         }
     }
 
