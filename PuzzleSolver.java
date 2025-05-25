@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 // Main class to run and test 8-puzzle solver with different algorithms
@@ -21,7 +22,35 @@ public class PuzzleSolver {
         }
         System.out.println("=========");
 	}
-    
+	public static void printAlgorithmInfo() {
+		System.out.print(YELLOW);
+		System.out.println("\n================== Algorithm Information ==================\n");
+
+		System.out.println("1. Uniform Cost Search (UCS):");
+		System.out.println("- UCS is a variant of Dijkstra's algorithm that searches the lowest cumulative cost path.");
+		System.out.println("- It does not use any heuristic to guide the search.");
+		System.out.println("- It guarantees the optimal (lowest cost) solution.");
+		System.out.println("- UCS expands nodes in order of their path cost from the start node.");
+		System.out.println("- It can be slow for large or complex puzzles due to exhaustive exploration.\n");
+
+		System.out.println("2. A* Search Algorithm:");
+		System.out.println("- A* uses both the actual cost from the start (g(n)) and a heuristic estimate to the goal (h(n)).");
+		System.out.println("- The evaluation function is f(n) = g(n) + h(n), where:");
+		System.out.println("    * g(n): cost from start to current node.");
+		System.out.println("    * h(n): estimated cost from current node to goal (heuristic).");
+		System.out.println("- In my implementation, the heuristic used is the Manhattan distance:");
+		System.out.println("    * Sum of the distances of each tile from its goal position.");
+		System.out.println("- A* is generally faster and more efficient than UCS if the heuristic is admissible (never overestimates).");
+		System.out.println("- It guarantees the optimal solution if the heuristic is consistent.\n");
+
+		System.out.println("3. Manual Play:");
+		System.out.println("- Allows you to solve the puzzle manually by making moves yourself.");
+		System.out.println("- The fewer moves you make, the better your score.");
+		System.out.println("- Great for practicing and understanding the puzzle mechanics.\n");
+
+		System.out.println("============================================================\n");
+		System.out.print(RESET);
+	}
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in); // Input scanner
@@ -103,10 +132,10 @@ public class PuzzleSolver {
 			
 			// Prompt for algorithm selection
 			while (true) {
-				System.out.print("Choose the solution algorithm: \nUCS: 1\nA*: 2\nManual play: 3\n");
+				System.out.print("Choose the solution algorithm: \nUCS: 1\nA*: 2\nManual play: 3\n4: INFO\n");
 				if (scan.hasNextInt()) {
 					choice = scan.nextInt();
-					if (choice == 1 || choice == 2 || choice == 3) {
+					if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
 						break;
 					} else {
 						System.out.println("Invalid choice, please enter 1, 2, or 3.");
@@ -129,6 +158,9 @@ public class PuzzleSolver {
 
 				// Print results
 				if (solution != null) {
+					System.out.println("---------");
+					System.out.println(" Solution found! Printing path...");
+					try { Thread.sleep(200); } catch (InterruptedException e) { e.printStackTrace(); }
 					EightPuzzleSolver.printPath(solver.getOptimalPath());
 					System.out.print(CYAN);
 					System.out.println("Cost: " + solver.getCost());
@@ -153,6 +185,9 @@ public class PuzzleSolver {
 
 				// Print results
 				if (solution != null) {
+					System.out.println("---------");
+					System.out.println("Solution found! Printing path...");
+					try { Thread.sleep(200); } catch (InterruptedException e) { e.printStackTrace(); }
 					EightPuzzleSolverAstr.printPath(solver.getOptimalPath());
 					System.out.print(CYAN);
 					System.out.println("Cost: " + solver.getCost());
@@ -173,7 +208,10 @@ public class PuzzleSolver {
 				System.out.println( YELLOW + "IMPORTANT: YOU ALWAYS MOVE THE EMPTY POSITION (0) TOWARDS A PUZZLE PIECE.\nBy this way,the positions are switched. " + RESET);
 				ManualSolver manualSolver = new ManualSolver();
 				manualSolver.play(initialState, scan);
-			}			
+			}
+			else if (alg == 4) {
+				printAlgorithmInfo();
+			}
 
 			// Ask user if they want to run again
 			choice = 0;

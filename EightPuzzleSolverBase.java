@@ -69,6 +69,7 @@ public abstract class EightPuzzleSolverBase {
 		System.out.println(YELLOW);
         for (int[][] state : path) {
             printState(state);
+            try { Thread.sleep(600); } catch (InterruptedException e) { e.printStackTrace(); }
         }
 		System.out.println(RESET);
 		
